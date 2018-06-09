@@ -67,3 +67,6 @@ Naming/FileName:
 
 Lint/UriEscapeUnescape:
   Enabled: false
+
+Documentation:
+  Enabled: false
