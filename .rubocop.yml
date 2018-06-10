@@ -73,3 +73,6 @@ Lint/UriEscapeUnescape:
 
 Documentation:
   Enabled: false
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
