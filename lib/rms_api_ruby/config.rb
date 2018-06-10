@@ -2,8 +2,6 @@ require 'logger'
 
 module RmsApiRuby
   class << self
-    attr_writer :log
-
     # Returns the current configuration
     #
     # Example
@@ -24,15 +22,6 @@ module RmsApiRuby
     # end
     def configure
       yield configuration
-    end
-
-    def log?
-      @log ||= false
-    end
-
-    def log(message)
-      return unless RmsApiRuby.log?
-      configuration.logger.send(configuration.log_level, message)
     end
   end
 
@@ -94,11 +83,8 @@ module RmsApiRuby
     option :version,        default: '1.0'
     option :user_name,      default: 'rms_api_ruby'
 
-    # Set a logger for when Restforce.log is set to true, defaulting to STDOUT
     option :logger,         default: ::Logger.new(STDOUT)
-
-    # Set a log level for logging when Restforce.log is set to true, defaulting to :debug
-    option :log_level,      default: :debug
+    option :log_level,      default: ::Logger::DEBUG
 
     def options
       self.class.options
