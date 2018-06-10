@@ -1,5 +1,5 @@
 module RmsApiRuby
-  module Chain
+  class Chain
     class Logger < RmsApiRuby::Chain
       def initialize(type, message)
         @type    = type
@@ -7,7 +7,13 @@ module RmsApiRuby
       end
 
       def call
-        chain { RmsApiRuby.logger.send(@type, @message) }
+        chain { logger.send(@type, @message) }
+      end
+
+      private
+
+      def logger
+        RmsApiRuby.configuration.logger
       end
     end
   end

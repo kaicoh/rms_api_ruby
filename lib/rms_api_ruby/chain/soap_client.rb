@@ -1,7 +1,7 @@
 require 'savon'
 
 module RmsApiRuby
-  module Chain
+  class Chain
     class SoapClient < RmsApiRuby::Chain
       SUCCESS = 200
 
@@ -13,9 +13,9 @@ module RmsApiRuby
 
       def call
         chain { @response = @client.call(@operation, message: @message) }
-        when_falsy { status_code == HTTP_SUCCESS }.
+        when_falsy { status_code == SUCCESS }.
           dam { handle_http_error }
-        chain(:response) { @response.boy["#{@operation}_response".to_sym][:return] }
+        chain(:response) { @response.body["#{@operation}_response".to_sym][:return] }
       end
 
       private

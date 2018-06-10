@@ -56,7 +56,9 @@ module RmsApiRuby
 
       def call # rubocop:disable Metrics/AbcSize
         chain { RmsApiRuby::Chain::Logger.new(:info, start_message) }
-        chain(:response) { RmsApiRuby::Chain::SoapClient.new(wsdl, @operation, message) }
+        chain(response: :response) do
+          RmsApiRuby::Chain::SoapClient.new(wsdl, @operation, message)
+        end
         when_truthy { |outflow| outflow.response[:error_code] =~ AUTH_ERRORCODE }.
           dam { |outflow| auth_error(outflow.response) }
         chain { RmsApiRuby::Chain::Logger.new(:info, complete_message) }
@@ -97,7 +99,7 @@ module RmsApiRuby
       end
 
       def start_message
-        "RMS OrderAPI '#{@operation.to_s.camelize}' started. args: #{args.inspect}"
+        "RMS OrderAPI '#{@operation.to_s.camelize}' started. args: #{@args.inspect}"
       end
 
       def complete_message

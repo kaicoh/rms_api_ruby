@@ -73,7 +73,7 @@ module RmsApiRuby
           instance_variable_get(:"@#{our_name}") ||
             instance_variable_set(
               :"@#{our_name}",
-              out_default.respond_to?(:call) ? out_default.call : our_default
+              our_default.respond_to?(:call) ? our_default.call : our_default
             )
         end
       end
