@@ -60,6 +60,9 @@ Metrics/BlockLength:
     - spec/**/*
     - restforce.gemspec
 
+Naming/AccessorMethodName:
+  Enabled: false
+
 Naming/FileName:
   Exclude:
     - Gemfile
