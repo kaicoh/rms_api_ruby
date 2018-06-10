@@ -29,9 +29,9 @@ module RmsApiRuby
         API_METHODS.include?(method) || super
       end
 
-      def call_api(type, args)
+      def call_api(api_method, args)
         Flow.new.
-          chain(response: :response) { Client.new(type, args) }.
+          chain(response: :response) { Client.new(api_method, args) }.
           on_dam { |error| handle_error(error) }.
           outflow.
           try(:response)

@@ -2,10 +2,10 @@ require 'spec_helper'
 
 RSpec.describe RmsApiRuby::Authentication do
   before do
-    RmsApiRuby.configure do |config|
-      config.service_secret = 'foo'
-      config.license_key    = 'bar'
-    end
+    allow(RmsApiRuby).to receive_message_chain('configuration.service_secret').
+      and_return('foo')
+    allow(RmsApiRuby).to receive_message_chain('configuration.license_key').
+      and_return('bar')
   end
 
   describe '::instance' do

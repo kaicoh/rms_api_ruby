@@ -45,7 +45,7 @@ RSpec.describe RmsApiRuby::Chain::SoapClient do
         expect(flow.dammed?).to be true
       end
 
-      it 'store ServerError into error_pool' do
+      it 'stores ServerError into error_pool' do
         flow = Flow.new.
           chain(response: :response) { described_class.new(wsdl, operation, message) }
         expect(flow.error_pool).to be_an_instance_of RmsApiRuby::ServerError
