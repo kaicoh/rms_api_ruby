@@ -80,11 +80,13 @@ module RmsApiRuby
     option :service_secret, default: -> { ENV['RMS_API_SERVICE_SECRET'] }
     option :license_key,    default: -> { ENV['RMS_API_LICENSE_KEY'] }
     option :shop_url,       default: -> { ENV['RMS_API_SHOP_URL'] }
-    option :version,        default: '1.0'
     option :user_name,      default: 'rms_api_ruby'
 
     option :logger,         default: ::Logger.new(STDOUT)
     option :log_level,      default: ::Logger::DEBUG
+
+    option :order_api_version,     default: '1.0'
+    option :inventory_api_version, default: '1.0'
 
     def options
       self.class.options

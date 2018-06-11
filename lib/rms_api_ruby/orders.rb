@@ -1,87 +1,38 @@
-require 'rms_api_ruby/authentication'
-require 'rms_api_ruby/chain'
-require 'rms_api_ruby/config'
+require 'rms_api_ruby/soap_api'
 
 module RmsApiRuby
   class Orders
+    extend RmsApiRuby::SoapApi
+
     class << self
-      API_METHODS = %i[
-        get_order
-        update_order
-        cancel_order
-        change_status
-        decision_point
-        r_bank_account_transfer
-        change_r_bank_to_unprocessing
-        do_enclosure
-        do_un_enclosure
-        change_enclosure_parent
-        get_enclosure_list
-        get_request_id
-        get_result
-      ].freeze
-
-      def method_missing(method, *args)
-        API_METHODS.include?(method) ? call_api(method, args.first) : super
+      def api_methods
+        %i[
+          get_order
+          update_order
+          cancel_order
+          change_status
+          decision_point
+          r_bank_account_transfer
+          change_r_bank_to_unprocessing
+          do_enclosure
+          do_un_enclosure
+          change_enclosure_parent
+          get_enclosure_list
+          get_request_id
+          get_result
+        ]
       end
 
-      def respond_to_missing?(method, include_private = false)
-        API_METHODS.include?(method) || super
-      end
-
-      def call_api(api_method, args)
-        Flow.new.
-          chain(response: :response) { Client.new(api_method, args) }.
-          on_dam { |error| handle_error(error) }.
-          outflow.
-          try(:response)
-      end
-
-      def handle_error(error)
-        raise error
-      rescue ServerError, AuthenticationError => e
-        RmsApiRuby.logger.error(e.message)
+      def soap_client
+        Client
       end
     end
 
-    class Client
-      include Waterfall
-
-      AUTH_ERRORCODE = /^E02-00/
-
-      def initialize(operation, args)
-        @operation = operation
-        @args = args
-      end
-
-      def call # rubocop:disable Metrics/AbcSize
-        chain { RmsApiRuby::Chain::Logger.new(:info, start_message) }
-        chain(response: :response) do
-          RmsApiRuby::Chain::SoapClient.new(wsdl, @operation, message)
-        end
-        when_truthy { |outflow| outflow.response.error_code =~ AUTH_ERRORCODE }.
-          dam { |outflow| auth_error(outflow.response) }
-        chain { RmsApiRuby::Chain::Logger.new(:info, complete_message) }
-      end
-
+    class Client < RmsApiRuby::SoapApi::Client
       private
 
-      def message
-        auth_params.merge business_params
-      end
-
-      def auth_params
-        {
-          arg0: {
-            auth_key: RmsApiRuby::Authentication.key,
-            shop_url: RmsApiRuby.configuration.shop_url,
-            user_name: RmsApiRuby.configuration.user_name
-          }
-        }
-      end
-
-      def business_params
-        { arg1: @args }
+      def api_name
+        'OrderAPI'
       end
 
       def wsdl
@@ -89,21 +40,7 @@ module RmsApiRuby
       end
 
       def version
-        RmsApiRuby.configuration.version
-      end
-
-      def auth_error(response)
-        refference = "status: #{response.error_code}, message: #{response.message}"
-        message    = "RMS Api authentication failed. #{refference}"
-        RmsApiRuby::AuthenticationError.new message
-      end
-
-      def start_message
-        "RMS OrderAPI '#{@operation.to_s.camelize}' started. args: #{@args.inspect}"
-      end
-
-      def complete_message
-        "RMS OrderAPI '#{@operation.to_s.camelize}' completed."
+        RmsApiRuby.configuration.order_api_version
       end
     end
   end
