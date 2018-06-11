@@ -80,7 +80,7 @@ rakuten_order = response.order_model
 # => #<Hashie::Mash>
 ```
 
-### ChangeStatus
+#### ChangeStatus
 
 ```ruby
 response = RmsApiRuby::Orders.get_request_id
