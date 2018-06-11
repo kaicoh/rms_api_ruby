@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'hashie/mash'
 
 RSpec.describe RmsApiRuby::Chain::SoapClient do
   let(:client_mock)   { double('Savon client mock') }
@@ -15,7 +16,17 @@ RSpec.describe RmsApiRuby::Chain::SoapClient do
     let(:message)   { 'foobar' }
 
     context 'when success' do
-      let(:expected_response) { 'This is the response' }
+      subject do
+        Flow.new.
+          chain(response: :response) { described_class.new(wsdl, operation, message) }
+      end
+
+      let(:expected_response) do
+        {
+          error_code: 'N00-000',
+          message: 'success'
+        }
+      end
 
       before do
         allow(response_mock).to receive_message_chain('http.code').
@@ -27,10 +38,14 @@ RSpec.describe RmsApiRuby::Chain::SoapClient do
         )
       end
 
-      it 'returns expected response' do
-        flow = Flow.new.
-          chain(response: :response) { described_class.new(wsdl, operation, message) }
-        expect(flow.outflow.response).to eq expected_response
+      it 'returns an instance of Hashie mash' do
+        expect(subject.outflow.response).to be_an_instance_of Hashie::Mash
+      end
+
+      it 'returns collect output' do
+        response = subject.outflow.response
+        expect(response.error_code).to eq 'N00-000'
+        expect(response.message).to eq 'success'
       end
     end
 

@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'savon'
+require 'hashie/mash'
 
 RSpec.describe RmsApiRuby::Orders do
   api_methods = %i[
@@ -137,8 +138,14 @@ RSpec.describe RmsApiRuby::Orders::Client do
         }
       end
 
-      it 'returns expected response' do
-        expect(subject.outflow.response).to eq expected_response
+      it 'returns an Hashie Mash instance' do
+        expect(subject.outflow.response).to be_an_instance_of Hashie::Mash
+      end
+
+      it 'returns collect output' do
+        response = subject.outflow.response
+        expect(response.error_code).to eq 'N00-000'
+        expect(response.message).to eq 'success'
       end
 
       it 'logs the start message' do

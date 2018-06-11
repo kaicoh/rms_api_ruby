@@ -59,7 +59,7 @@ module RmsApiRuby
         chain(response: :response) do
           RmsApiRuby::Chain::SoapClient.new(wsdl, @operation, message)
         end
-        when_truthy { |outflow| outflow.response[:error_code] =~ AUTH_ERRORCODE }.
+        when_truthy { |outflow| outflow.response.error_code =~ AUTH_ERRORCODE }.
           dam { |outflow| auth_error(outflow.response) }
         chain { RmsApiRuby::Chain::Logger.new(:info, complete_message) }
       end
@@ -93,7 +93,7 @@ module RmsApiRuby
       end
 
       def auth_error(response)
-        refference = "status: #{response[:error_code]}, message: #{response[:message]}"
+        refference = "status: #{response.error_code}, message: #{response.message}"
         message    = "RMS Api authentication failed. #{refference}"
         RmsApiRuby::AuthenticationError.new message
       end

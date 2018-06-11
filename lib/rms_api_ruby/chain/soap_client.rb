@@ -1,4 +1,5 @@
 require 'savon'
+require 'hashie/mash'
 
 module RmsApiRuby
   class Chain
@@ -15,7 +16,7 @@ module RmsApiRuby
         chain { @response = @client.call(@operation, message: @message) }
         when_falsy { status_code == SUCCESS }.
           dam { handle_http_error }
-        chain(:response) { @response.body["#{@operation}_response".to_sym][:return] }
+        chain(:response) { parse_to_mash }
       end
 
       private
@@ -27,6 +28,10 @@ module RmsApiRuby
 
       def status_code
         @response.try(:http).try(:code)
+      end
+
+      def parse_to_mash
+        Hashie::Mash.new(@response.body).send("#{@operation}_response").return
       end
     end
   end
