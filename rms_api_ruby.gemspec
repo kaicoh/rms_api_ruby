@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Kaicoh"]
   spec.email         = ["sumireminami@gmail.com"]
 
-  spec.summary       = %q{RMS(Rakuten Marchant Service) WEB API Client for Ruby}
-  spec.description   = %q{RMS(Rakuten Marchant Service) WEB API Client for Ruby}
+  spec.summary       = %q{A Ruby client for RMS(Rakuten Marchant Service) WEB API}
+  spec.description   = %q{A Ruby client for RMS(Rakuten Marchant Service) WEB API}
   spec.homepage      = "https://github.com/Kaicoh"
   spec.license       = "MIT"
 

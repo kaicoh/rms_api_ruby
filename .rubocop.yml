@@ -3,6 +3,7 @@ AllCops:
   Include:
     - Rakefile
   Exclude:
+    - rms_api_ruby.gemspec
     - .*/**/*
 
 # Limit lines to 80 characters.
