@@ -29,7 +29,7 @@ module RmsApiRuby
     def handle_error(error)
       raise error
     rescue ServerError, AuthenticationError => e
-      RmsApiRuby.logger.error(e.message)
+      RmsApiRuby.configuration.logger.error(e.message)
     end
   end
 end

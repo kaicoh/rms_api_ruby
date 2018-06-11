@@ -1,9 +1,11 @@
 # RmsApiRuby
 
-RmsApiRuby is a ruby gem for the RMS(Rakuten Marchant Service) Web API. At this time this gem supports OrderAPI only.By default all API calls will return [Hashie::Mash](https://github.com/intridea/hashie/tree/v1.2.0) objects.
+RmsApiRuby is a ruby gem for the RMS(Rakuten Marchant Service) Web API. By default all API calls will return [Hashie::Mash](https://github.com/intridea/hashie/tree/v1.2.0) objects.  
+At this time this gem supports OrderAPI and InventoryAPI only.
 
 Support
 - OrderAPI
+- InventoryAPI
 
 Not Support yet
 - ItemAPI
@@ -13,7 +15,6 @@ Not Support yet
 - CategoryAPI
 - CouponAPI
 - ShopManagimentAPI
-- InventoryAPI
 - System Event Notification Service
 - RakutenPayOrderAPI
 - PaymentAPI
@@ -67,7 +68,7 @@ args = {
   is_order_number_only_flag: false,
   order_number: ['Rakuten order number you want'],
 }
-response = RmsApiRuby::Orders.get_order(args)
+response = RmsApiRuby::Order.get_order(args)
 # => #<Hashie::Mash>
 
 response.error_code
@@ -83,7 +84,7 @@ rakuten_order = response.order_model
 #### ChangeStatus
 
 ```ruby
-response = RmsApiRuby::Orders.get_request_id
+response = RmsApiRuby::Order.get_request_id
 # => #<Hashie::Mash>
 
 response.error_code
@@ -105,7 +106,7 @@ args = {
   ]
 }
 
-response = RmsApiRuby::Orders.change_status(args)
+response = RmsApiRuby::Order.change_status(args)
 # => #<Hashie::Mash>
 
 response.error_code

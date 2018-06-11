@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rms_api_ruby (0.1.0)
+    rms_api_ruby (0.2.0)
       activesupport
       hashie
       savon (~> 2.12.0)
