@@ -54,7 +54,7 @@ RmsApiRuby.configure do |config|
   config.license_key    = 'Your RMS license key'
   config.shop_url       = 'Your RMS shop url'
   config.version        = 'RMS API version' # default 1.0
-  config.user_name      = 'user name'       # defaurl 'rms_api_ruby'
+  config.user_name      = 'user name'       # default 'rms_api_ruby'
 end
 ```
 
@@ -132,4 +132,8 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the RmsApiRuby project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/rms_api_ruby/blob/master/CODE_OF_CONDUCT.md).
+- 1. Fork it ( https://github.com/Kaicoh/rms_api_ruby/fork )
+- 2. Create your feature branch (git checkout -b my-new-feature)
+- 3. Commit your changes (git commit -am 'Add some feature')
+- 4. Push to the branch (git push origin my-new-feature)
+- 5. Create a new Pull Request
