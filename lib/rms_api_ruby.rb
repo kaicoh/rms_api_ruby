@@ -12,4 +12,5 @@ module RmsApiRuby
   autoload :Authentication, 'rms_api_ruby/authentication'
   autoload :Chain,          'rms_api_ruby/chain'
   autoload :Orders,         'rms_api_ruby/orders'
+  autoload :Inventory,      'rms_api_ruby/inventory'
 end
