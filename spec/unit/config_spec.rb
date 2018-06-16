@@ -17,7 +17,8 @@ RSpec.describe RmsApiRuby do
     it { expect(subject).to be_an_instance_of RmsApiRuby::Configuration }
 
     context 'by_default' do
-      it { expect(subject.version).to   eq '1.0' }
+      it { expect(subject.order_api_version).to eq '1.0' }
+      it { expect(subject.inventory_api_version).to eq '1.0' }
       it { expect(subject.user_name).to eq 'rms_api_ruby' }
       it { expect(subject.logger).to be_an_instance_of ::Logger }
       it { expect(subject.log_level).to eq ::Logger::DEBUG }
@@ -45,7 +46,8 @@ RSpec.describe RmsApiRuby do
       service_secret
       license_key
       shop_url
-      version
+      order_api_version
+      inventory_api_version
       user_name
       logger
       log_level
