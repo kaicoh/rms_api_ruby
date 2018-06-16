@@ -11,16 +11,19 @@ RSpec.describe RmsApiRuby::Chain::SoapClient do
   end
 
   describe '#call' do
-    let(:wsdl)      { 'test wsdl' }
-    let(:operation) { :test_operation }
-    let(:message)   { 'foobar' }
+    let(:wsdl)          { 'test wsdl' }
+    let(:operation)     { :test_operation }
+    let(:message)       { 'foobar' }
+    let(:return_method) { 'return' }
+
+    subject do
+      Flow.new.
+        chain(response: :response) do
+          described_class.new(wsdl, operation, message, return_method)
+        end
+    end
 
     context 'when success' do
-      subject do
-        Flow.new.
-          chain(response: :response) { described_class.new(wsdl, operation, message) }
-      end
-
       let(:expected_response) do
         {
           error_code: 'N00-000',
@@ -54,15 +57,10 @@ RSpec.describe RmsApiRuby::Chain::SoapClient do
         allow(response_mock).to receive_message_chain('http.code').and_return(500)
       end
 
-      it 'dammed' do
-        flow = Flow.new.
-          chain(response: :response) { described_class.new(wsdl, operation, message) }
-        expect(flow.dammed?).to be true
-      end
+      it { expect(subject.dammed?).to be true }
 
       it 'stores ServerError into error_pool' do
-        flow = Flow.new.
-          chain(response: :response) { described_class.new(wsdl, operation, message) }
+        flow = subject
         expect(flow.error_pool).to be_an_instance_of RmsApiRuby::ServerError
         expect(flow.error_pool.message).to eq 'HTTP Request failed. Response code: 500'
       end
