@@ -51,11 +51,12 @@ Or can set any of the options via this way
 
 ```ruby
 RmsApiRuby.configure do |config|
-  config.service_secret = 'Your RMS service secret'
-  config.license_key    = 'Your RMS license key'
-  config.shop_url       = 'Your RMS shop url'
-  config.version        = 'RMS API version' # default 1.0
-  config.user_name      = 'user name'       # default 'rms_api_ruby'
+  config.service_secret        = 'Your RMS service secret'
+  config.license_key           = 'Your RMS license key'
+  config.shop_url              = 'Your RMS shop url'
+  config.user_name             = 'user name'             # default 'rms_api_ruby'
+  config.order_api_version     = 'Order API version'     # default 1.0
+  config.inventory_api_version = 'Inventory API version' # default 1.0
 end
 ```
 
