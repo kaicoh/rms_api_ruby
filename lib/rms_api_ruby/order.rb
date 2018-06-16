@@ -31,6 +31,22 @@ module RmsApiRuby
     class Client < RmsApiRuby::SoapApi::Client
       private
 
+      def error_code
+        :error_code
+      end
+
+      def error_message
+        :message
+      end
+
+      def message
+        auth_params.merge business_params
+      end
+
+      def return_method
+        :return
+      end
+
       def api_name
         'OrderAPI'
       end
@@ -41,6 +57,20 @@ module RmsApiRuby
 
       def version
         RmsApiRuby.configuration.order_api_version
+      end
+
+      def auth_params
+        {
+          arg0: {
+            auth_key: RmsApiRuby::Authentication.key,
+            shop_url: RmsApiRuby.configuration.shop_url,
+            user_name: RmsApiRuby.configuration.user_name
+          }
+        }
+      end
+
+      def business_params
+        { arg1: @args }
       end
     end
   end

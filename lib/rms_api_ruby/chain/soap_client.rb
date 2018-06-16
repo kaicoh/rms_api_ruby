@@ -6,10 +6,11 @@ module RmsApiRuby
     class SoapClient < RmsApiRuby::Chain
       SUCCESS = 200
 
-      def initialize(wsdl, operation, message)
-        @client    = Savon.client(wsdl: wsdl)
-        @operation = operation
-        @message   = message
+      def initialize(wsdl, operation, message, return_method)
+        @client        = Savon.client(wsdl: wsdl)
+        @operation     = operation
+        @message       = message
+        @return_method = return_method
       end
 
       def call
@@ -31,7 +32,8 @@ module RmsApiRuby
       end
 
       def parse_to_mash
-        Hashie::Mash.new(@response.body).send("#{@operation}_response").return
+        Hashie::Mash.new(@response.body).
+          send("#{@operation}_response").send(@return_method)
       end
     end
   end
