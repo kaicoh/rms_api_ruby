@@ -1,6 +1,7 @@
 require 'spec_helper'
 require 'savon'
 require 'hashie/mash'
+require 'support/shared_contexts/config'
 
 RSpec.describe RmsApiRuby::Inventory do
   api_methods = %i[
@@ -47,20 +48,11 @@ RSpec.describe RmsApiRuby::Inventory do
 end
 
 RSpec.describe RmsApiRuby::Inventory::Client do
+  include_context 'shared config'
+
   let(:client)    { described_class.new(operation, args) }
   let(:operation) { :test_operation }
   let(:args)      { { foo: 'bar' } }
-
-  before do
-    allow(RmsApiRuby::Authentication).to receive(:key) { 'test auth key' }
-
-    allow(RmsApiRuby).to receive_message_chain('configuration.shop_url').
-      and_return('test shop')
-    allow(RmsApiRuby).to receive_message_chain('configuration.inventory_api_version').
-      and_return('1.0')
-    allow(RmsApiRuby).to receive_message_chain('configuration.user_name').
-      and_return('test user')
-  end
 
   describe '#error_code' do
     subject { client.send(:error_code) }
@@ -75,11 +67,7 @@ RSpec.describe RmsApiRuby::Inventory::Client do
   describe '#message' do
     let(:expected) do
       {
-        external_user_auth_model: {
-          auth_key:  'test auth key',
-          shop_url:  'test shop',
-          user_name: 'test user'
-        },
+        external_user_auth_model: auth_params,
         updateRequestExternalModel: args
       }
     end

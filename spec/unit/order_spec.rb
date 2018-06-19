@@ -1,6 +1,7 @@
 require 'spec_helper'
 require 'savon'
 require 'hashie/mash'
+require 'support/shared_contexts/config'
 
 RSpec.describe RmsApiRuby::Order do
   api_methods = %i[
@@ -57,20 +58,11 @@ RSpec.describe RmsApiRuby::Order do
 end
 
 RSpec.describe RmsApiRuby::Order::Client do
+  include_context 'shared config'
+
   let(:client)    { described_class.new(operation, args) }
   let(:operation) { :test_operation }
   let(:args)      { { foo: 'bar' } }
-
-  before do
-    allow(RmsApiRuby::Authentication).to receive(:key) { 'test auth key' }
-
-    allow(RmsApiRuby).to receive_message_chain('configuration.shop_url').
-      and_return('test shop')
-    allow(RmsApiRuby).to receive_message_chain('configuration.order_api_version').
-      and_return('1.0')
-    allow(RmsApiRuby).to receive_message_chain('configuration.user_name').
-      and_return('test user')
-  end
 
   describe '#error_code' do
     subject { client.send(:error_code) }
@@ -85,11 +77,7 @@ RSpec.describe RmsApiRuby::Order::Client do
   describe '#message' do
     let(:expected) do
       {
-        arg0: {
-          auth_key:  'test auth key',
-          shop_url:  'test shop',
-          user_name: 'test user'
-        },
+        arg0: auth_params,
         arg1: args
       }
     end

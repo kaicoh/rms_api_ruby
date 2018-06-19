@@ -1,15 +1,8 @@
 require 'spec_helper'
+require 'support/shared_contexts/logger'
 
 RSpec.describe RmsApiRuby::Chain::Logger do
-  let(:logger_mock) { double('Logger mock') }
-
-  before do
-    allow(logger_mock).to receive(:info)
-    allow(logger_mock).to receive(:level=)
-    allow(RmsApiRuby).to receive_message_chain('configuration.logger').
-      and_return(logger_mock)
-    allow(RmsApiRuby).to receive_message_chain('configuration.log_level')
-  end
+  include_context 'shared logger'
 
   describe '#call' do
     it 'sends info and message to the logger' do

@@ -3,18 +3,19 @@ require 'savon'
 require 'savon/mock/spec_helper'
 require 'hashie/mash'
 require 'rms_api_ruby/soap_api/client'
+require 'support/shared_contexts/logger'
 
 RSpec.describe RmsApiRuby::SoapApi::Client do
   include Savon::SpecHelper
+
+  include_context 'shared logger'
 
   before(:all) { savon.mock! }
   after(:all)  { savon.unmock! }
 
   let(:operation) { :test_operation }
   let(:args)      { { foo: 'bar' } }
-
   let(:client) { described_class.new(operation, args) }
-  let(:logger_mock) { double('Logger mock') }
 
   before do
     allow(client).to receive(:error_code) { :error_code }
@@ -23,12 +24,6 @@ RSpec.describe RmsApiRuby::SoapApi::Client do
     allow(client).to receive(:return_method) { :return }
     allow(client).to receive(:api_name) { 'TestAPI' }
     allow(client).to receive(:wsdl) { 'spec/fixtures/wsdl/client.wsdl' }
-
-    allow(logger_mock).to receive(:info)
-    allow(logger_mock).to receive(:level=)
-    allow(RmsApiRuby).to receive_message_chain('configuration.logger').
-      and_return(logger_mock)
-    allow(RmsApiRuby).to receive_message_chain('configuration.log_level')
 
     savon.expects(:test_operation).with(message: args).returns(response)
   end

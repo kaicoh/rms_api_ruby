@@ -2,12 +2,15 @@ require 'spec_helper'
 require 'savon'
 require 'hashie/mash'
 require 'rms_api_ruby/soap_api'
+require 'support/shared_contexts/logger'
 
 class TestClass
   extend RmsApiRuby::SoapApi
 end
 
 RSpec.describe RmsApiRuby::SoapApi do
+  include_context 'shared logger'
+
   describe '::handle_error' do
     let(:message) { 'test error' }
 
@@ -17,14 +20,6 @@ RSpec.describe RmsApiRuby::SoapApi do
     ]
 
     context 'when rescueable_errors' do
-      let(:logger_mock) { double('Logger mock') }
-
-      before do
-        allow(RmsApiRuby).to receive_message_chain('configuration.logger').
-          and_return(logger_mock)
-        allow(logger_mock).to receive(:error)
-      end
-
       rescueable_errors.each do |error|
         it "logged error message of #{error}" do
           expect(logger_mock).to receive(:error).with(message)
