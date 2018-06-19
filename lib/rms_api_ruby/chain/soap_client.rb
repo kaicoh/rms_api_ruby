@@ -14,13 +14,19 @@ module RmsApiRuby
       end
 
       def call
-        chain { @response = @client.call(@operation, message: @message) }
+        chain { execute_request }
         when_falsy { status_code == SUCCESS }.
           dam { handle_http_error }
         chain(:response) { parse_to_mash }
       end
 
       private
+
+      def execute_request
+        @response = @client.call(@operation, message: @message)
+      rescue Savon::SOAPFault
+        @response = Hashie::Mash.new(http: { code: 500 })
+      end
 
       def handle_http_error
         message = "HTTP Request failed. Response code: #{status_code}"

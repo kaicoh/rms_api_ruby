@@ -1,17 +1,15 @@
 require 'spec_helper'
 require 'hashie/mash'
+require "savon/mock/spec_helper"
 
 RSpec.describe RmsApiRuby::Chain::SoapClient do
-  let(:client_mock)   { double('Savon client mock') }
-  let(:response_mock) { double('Soap response mock') }
+  include Savon::SpecHelper
 
-  before do
-    allow(Savon).to receive(:client).and_return(client_mock)
-    allow(client_mock).to receive(:call).and_return(response_mock)
-  end
+  before(:all) { savon.mock! }
+  after(:all)  { savon.unmock! }
 
   describe '#call' do
-    let(:wsdl)          { 'test wsdl' }
+    let(:wsdl)          { 'spec/fixtures/wsdl/soap_spec.wsdl' }
     let(:operation)     { :test_operation }
     let(:message)       { 'foobar' }
     let(:return_method) { 'return' }
@@ -24,21 +22,10 @@ RSpec.describe RmsApiRuby::Chain::SoapClient do
     end
 
     context 'when success' do
-      let(:expected_response) do
-        {
-          error_code: 'N00-000',
-          message: 'success'
-        }
-      end
+      let(:response) { File.read('spec/fixtures/soap_response/success.xml') }
 
       before do
-        allow(response_mock).to receive_message_chain('http.code').
-          and_return(described_class::SUCCESS)
-        allow(response_mock).to receive(:body).and_return(
-          test_operation_response: {
-            return: expected_response
-          }
-        )
+        savon.expects(:test_operation).with(message: message).returns(response)
       end
 
       it 'returns an instance of Hashie mash' do
@@ -48,13 +35,16 @@ RSpec.describe RmsApiRuby::Chain::SoapClient do
       it 'returns collect output' do
         response = subject.outflow.response
         expect(response.error_code).to eq 'N00-000'
-        expect(response.message).to eq 'success'
+        expect(response.error_message).to eq 'success'
       end
     end
 
     context 'when failure' do
+      let(:soap_fault) { File.read('spec/fixtures/soap_response/failure.xml') }
+
       before do
-        allow(response_mock).to receive_message_chain('http.code').and_return(500)
+        response = { code: 500, headers: {}, body: soap_fault }
+        savon.expects(:test_operation).with(message: message).returns(response)
       end
 
       it { expect(subject.dammed?).to be true }
