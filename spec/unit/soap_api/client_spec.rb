@@ -22,7 +22,7 @@ RSpec.describe RmsApiRuby::SoapApi::Client do
     allow(client).to receive(:message).and_return(args)
     allow(client).to receive(:return_method) { :return }
     allow(client).to receive(:api_name) { 'TestAPI' }
-    allow(client).to receive(:wsdl) { 'spec/fixtures/wsdl/soap_spec.wsdl' }
+    allow(client).to receive(:wsdl) { 'spec/fixtures/wsdl/client.wsdl' }
 
     allow(logger_mock).to receive(:info)
     allow(logger_mock).to receive(:level=)

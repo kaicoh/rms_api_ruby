@@ -9,7 +9,7 @@ RSpec.describe RmsApiRuby::Chain::SoapClient do
   after(:all)  { savon.unmock! }
 
   describe '#call' do
-    let(:wsdl)          { 'spec/fixtures/wsdl/soap_spec.wsdl' }
+    let(:wsdl)          { 'spec/fixtures/wsdl/client.wsdl' }
     let(:operation)     { :test_operation }
     let(:message)       { 'foobar' }
     let(:return_method) { 'return' }

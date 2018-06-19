@@ -1,0 +1,45 @@
+<?xml version = "1.0"?>
+<definitions name = "RmsApiRubySpec"
+    targetNamespace = "http://example.com/rms_api_ruby.wsdl" 
+    xmlns:tns="http://example.com/rms_api_ruby.wsdl" 
+    xmlns:xsd = "http://www.w3.org/1999/XMLSchema" 
+    xmlns:soap = "http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns = "http://schemas.xmlsoap.org/wsdl/">
+
+    <message name = "getOrderRequest">
+        <part name = "foo" type = "xsd:string"/>
+    </message>
+    <message name = "getOrderResponse">
+        <part name = "Result" type = "xsd:string"/>
+    </message>
+
+    <portType name = "RmsApiRubySpecPortType">
+        <operation name = "getOrder">
+            <input message = "getOrderRequest" name = "getOrder"/>
+            <output message = "getOrderResponse" name = "getOrderResponse"/>
+        </operation>
+    </portType>
+
+    <binding name = "RmsApiRubySpecBinding" type = "RmsApiRubySpecPortType">
+        <soap:binding style = "rpc" transport = "http://schemas.xmlsoap.org/soap/http"/>
+        <operation name = "getOrder">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use = "encoded" namespace = "urn:xmethods-RmsApiRubySpec" 
+                    encodingStyle = "http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use = "encoded" namespace = "urn:xmethods-RmsApiRubySpec" 
+                    encodingStyle = "http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name = "RmsApiRubySpecService">
+        <documentation>Rms Api Ruby Rspec savon helper</documentation>
+        <port name = "RmsApiRubySpecPort" binding = "RmsApiRubySpecBinding">
+            <soap:address location = "http://services.xmethods.net:80/soap" />
+        </port>
+    </service>
+
+</definitions>

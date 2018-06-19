@@ -1,0 +1,10 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Body>
+      <ns2:getOrderResponse xmlns:ns2="http://v1_0.ws.user.example.com">
+         <return>
+            <errorCode>N00-000</errorCode>
+            <message>success</message>
+         </return>
+      </ns2:getOrderResponse>
+   </soap:Body>
+</soap:Envelope>

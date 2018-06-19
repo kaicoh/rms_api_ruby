@@ -1,0 +1,10 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Body>
+      <ns2:testOperationResponse xmlns:ns2="http://v1_0.ws.user.example.com">
+         <return>
+            <errorCode>E02-001</errorCode>
+            <errorMessage>authentication failed</errorMessage>
+         </return>
+      </ns2:testOperationResponse>
+   </soap:Body>
+</soap:Envelope>

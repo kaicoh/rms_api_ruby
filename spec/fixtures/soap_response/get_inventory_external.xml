@@ -1,0 +1,10 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Body>
+      <ns2:getInventoryExternalResponse xmlns:ns2="http://v1_0.ws.user.example.com">
+         <result>
+            <errCode>N00-000</errCode>
+            <errMessage>success</errMessage>
+         </result>
+      </ns2:getInventoryExternalResponse>
+   </soap:Body>
+</soap:Envelope>
