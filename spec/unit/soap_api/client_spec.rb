@@ -1,17 +1,20 @@
 require 'spec_helper'
 require 'savon'
+require 'savon/mock/spec_helper'
 require 'hashie/mash'
 require 'rms_api_ruby/soap_api/client'
 
 RSpec.describe RmsApiRuby::SoapApi::Client do
-  let(:logger_mock)   { double('Logger mock') }
-  let(:client_mock)   { double('Soap client mock') }
-  let(:response_mock) { double('Soap response mock') }
+  include Savon::SpecHelper
+
+  before(:all) { savon.mock! }
+  after(:all)  { savon.unmock! }
 
   let(:operation) { :test_operation }
   let(:args)      { { foo: 'bar' } }
 
   let(:client) { described_class.new(operation, args) }
+  let(:logger_mock) { double('Logger mock') }
 
   before do
     allow(client).to receive(:error_code) { :error_code }
@@ -19,12 +22,7 @@ RSpec.describe RmsApiRuby::SoapApi::Client do
     allow(client).to receive(:message).and_return(args)
     allow(client).to receive(:return_method) { :return }
     allow(client).to receive(:api_name) { 'TestAPI' }
-    allow(client).to receive(:wsdl) { 'test wsdl' }
-
-    allow(Savon).to receive(:client).and_return(client_mock)
-    allow(client_mock).to receive(:call).and_return(response_mock)
-    allow(response_mock).to receive_message_chain('http.code').
-      and_return(RmsApiRuby::Chain::SoapClient::SUCCESS)
+    allow(client).to receive(:wsdl) { 'spec/fixtures/wsdl/soap_spec.wsdl' }
 
     allow(logger_mock).to receive(:info)
     allow(logger_mock).to receive(:level=)
@@ -32,11 +30,7 @@ RSpec.describe RmsApiRuby::SoapApi::Client do
       and_return(logger_mock)
     allow(RmsApiRuby).to receive_message_chain('configuration.log_level')
 
-    allow(response_mock).to receive(:body).and_return(
-      test_operation_response: {
-        return: expected_response
-      }
-    )
+    savon.expects(:test_operation).with(message: args).returns(response)
   end
 
   describe '#call' do
@@ -45,12 +39,7 @@ RSpec.describe RmsApiRuby::SoapApi::Client do
     end
 
     context 'request success' do
-      let(:expected_response) do
-        {
-          error_code: 'N00-000',
-          error_message: 'success'
-        }
-      end
+      let(:response) { File.read('spec/fixtures/soap_response/success.xml') }
 
       it 'returns an Hashie Mash instance' do
         expect(subject.outflow.response).to be_an_instance_of Hashie::Mash
@@ -76,14 +65,9 @@ RSpec.describe RmsApiRuby::SoapApi::Client do
     end
 
     context 'request failed' do
-      let(:expected_response) do
-        {
-          error_code: 'E02-001',
-          error_message: 'auth error message'
-        }
-      end
+      let(:response) { File.read('spec/fixtures/soap_response/auth_error.xml') }
       let(:error_msg) do
-        'RMS Api authentication failed. status: E02-001, message: auth error message'
+        'RMS Api authentication failed. status: E02-001, message: authentication failed'
       end
 
       it { expect(subject.dammed?).to be true }
