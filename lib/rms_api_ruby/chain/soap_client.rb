@@ -5,6 +5,7 @@ module RmsApiRuby
   class Chain
     class SoapClient < RmsApiRuby::Chain
       SUCCESS = 200
+      FAILURE = 500
 
       def initialize(wsdl, operation, message, return_method)
         @client        = Savon.client(wsdl: wsdl)
@@ -25,7 +26,7 @@ module RmsApiRuby
       def execute_request
         @response = @client.call(@operation, message: @message)
       rescue Savon::SOAPFault
-        @response = Hashie::Mash.new(http: { code: 500 })
+        @response = Hashie::Mash.new(http: { code: FAILURE })
       end
 
       def handle_http_error
