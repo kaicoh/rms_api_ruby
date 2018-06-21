@@ -15,6 +15,8 @@ module RmsApiRuby
   autoload :Order,          'rms_api_ruby/order'
   autoload :Orders,         'rms_api_ruby/orders'
   autoload :Inventory,      'rms_api_ruby/inventory'
+  autoload :Item,           'rms_api_ruby/item'
+  autoload :Items,          'rms_api_ruby/items'
 
   def self.root
     File.dirname __dir__
