@@ -1,5 +1,6 @@
 # RmsApiRuby
 
+[![Gem Version](https://badge.fury.io/rb/rms_api_ruby.svg)](https://badge.fury.io/rb/rms_api_ruby)
 [![CircleCI](https://circleci.com/gh/Kaicoh/rms_api_ruby/tree/master.svg?style=svg)](https://circleci.com/gh/Kaicoh/rms_api_ruby/tree/master)
 
 RmsApiRuby is a ruby gem for the RMS(Rakuten Marchant Service) Web API. By default all API calls will return [Hashie::Mash](https://github.com/intridea/hashie/tree/v1.2.0) objects.  
