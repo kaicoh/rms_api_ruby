@@ -59,3 +59,8 @@ jobs:
       - store_artifacts:
           path: /tmp/test-results
           destination: test-results
+
+# https://circleci.com/docs/1.0/bundler-latest/
+dependencies:
+  pre:
+    - gem install bundler --pre
