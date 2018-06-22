@@ -46,8 +46,7 @@ jobs:
           command: |
             bundle exec rspec --format progress \
                             --format RspecJunitFormatter \
-                            --out /tmp/test-results/rspec.xml \
-                            --format progress
+                            --out /tmp/test-results/rspec.xml
 
       # collect reports
       - store_test_results:
