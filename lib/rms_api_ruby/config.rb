@@ -87,6 +87,7 @@ module RmsApiRuby
 
     option :order_api_version,     default: '1.0'
     option :inventory_api_version, default: '1.0'
+    option :item_api_version,      default: '1.0'
 
     def options
       self.class.options
