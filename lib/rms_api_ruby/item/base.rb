@@ -8,9 +8,9 @@ module RmsApiRuby
       include Waterfall
       include RmsApiRuby::HashKeysCamelizable
 
-      def initialize(args)
+      def initialize(args, client_class = RmsApiRuby::Chain::HttpClient)
         @args   = args
-        @client = RmsApiRuby::Chain::HttpClient.new(
+        @client = client_class.new(
           method: http_method,
           url: url,
           params: camelize_keys(args, :lower),

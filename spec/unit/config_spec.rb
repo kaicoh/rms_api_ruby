@@ -19,6 +19,7 @@ RSpec.describe RmsApiRuby do
     context 'by_default' do
       it { expect(subject.order_api_version).to eq '1.0' }
       it { expect(subject.inventory_api_version).to eq '1.0' }
+      it { expect(subject.item_api_version).to eq '1.0' }
       it { expect(subject.user_name).to eq 'rms_api_ruby' }
       it { expect(subject.logger).to be_an_instance_of ::Logger }
       it { expect(subject.log_level).to eq ::Logger::DEBUG }
