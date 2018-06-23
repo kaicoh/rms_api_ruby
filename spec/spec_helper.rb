@@ -1,5 +1,6 @@
 require "bundler/setup"
 require "rms_api_ruby"
+require 'webmock/rspec'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -16,3 +17,6 @@ RSpec.configure do |config|
   # from the shared context.
   config.shared_context_metadata_behavior = :apply_to_host_groups
 end
+
+WebMock.allow_net_connect!
+WebMock.disable!
