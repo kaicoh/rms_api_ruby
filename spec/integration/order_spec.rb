@@ -36,7 +36,7 @@ RSpec.describe RmsApiRuby::Order do
         expect(subject).to be_an_instance_of Hashie::Mash
       end
 
-      it 'returns collect output' do
+      it 'returns correct output' do
         response = subject
         expect(response.error_code).to eq 'N00-000'
         expect(response.message).to    eq 'success'

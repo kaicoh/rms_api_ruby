@@ -37,7 +37,7 @@ RSpec.describe RmsApiRuby::Inventory do
         expect(subject).to be_an_instance_of Hashie::Mash
       end
 
-      it 'returns collect output' do
+      it 'returns correct output' do
         response = subject
         expect(response.err_code).to    eq 'N00-000'
         expect(response.err_message).to eq 'success'

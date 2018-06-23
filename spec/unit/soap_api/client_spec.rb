@@ -40,7 +40,7 @@ RSpec.describe RmsApiRuby::SoapApi::Client do
         expect(subject.outflow.response).to be_an_instance_of Hashie::Mash
       end
 
-      it 'returns collect output' do
+      it 'returns correct output' do
         response = subject.outflow.response
         expect(response.error_code).to    eq 'N00-000'
         expect(response.error_message).to eq 'success'
