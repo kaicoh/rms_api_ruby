@@ -6,46 +6,76 @@ class TestClass
 end
 
 RSpec.describe RmsApiRuby::HashKeysCamelizable do
+  subject { object.camelize_keys(hash) }
   let(:object) { TestClass.new }
 
   describe '#camelize_keys' do
-    context 'first letter :upper' do
-      subject { object.camelize_keys(hash, :upper) }
-
-      context 'key is a string' do
-        let(:hash)     { { 'foo_bar' => 'baz' } }
-        let(:expected) { { 'FooBar' => 'baz' } }
-        it 'returns a hash camelized string key' do
-          expect(subject).to eq expected
-        end
+    context 'string keys' do
+      let(:hash)     { { 'foo_bar' => 'baz' } }
+      let(:expected) { { 'FooBar' => 'baz' } }
+      it 'transforms to camelized string key hash' do
+        expect(subject).to eq expected
       end
+    end
 
-      context 'key is a symbol' do
-        let(:hash)     { { foo_bar: 'baz' } }
-        let(:expected) { { FooBar: 'baz' } }
-        it 'returns a hash camelized symbol key' do
-          expect(subject).to eq expected
-        end
+    context 'symbol keys' do
+      let(:hash)     { { foo_bar: 'baz' } }
+      let(:expected) { { FooBar: 'baz' } }
+      it 'transforms to camelized symbol key hash' do
+        expect(subject).to eq expected
       end
     end
 
     context 'first letter :lower' do
       subject { object.camelize_keys(hash, :lower) }
-
-      context 'key is a string' do
-        let(:hash)     { { 'foo_bar' => 'baz' } }
-        let(:expected) { { 'fooBar' => 'baz' } }
-        it 'returns a hash camelized string key' do
-          expect(subject).to eq expected
-        end
+      let(:hash)     { { 'foo_bar' => 'baz' } }
+      let(:expected) { { 'fooBar' => 'baz' } }
+      it 'returns a hash camelized string key except first letter' do
+        expect(subject).to eq expected
       end
+    end
 
-      context 'key is a symbol' do
-        let(:hash)     { { foo_bar: 'baz' } }
-        let(:expected) { { fooBar: 'baz' } }
-        it 'returns a hash camelized symbol key' do
-          expect(subject).to eq expected
-        end
+    context 'when nexted hash' do
+      let(:hash) do
+        {
+          foo_bar: {
+            bar_baz: 'foobar'
+          }
+        }
+      end
+      let(:expected) do
+        {
+          FooBar: {
+            BarBaz: 'foobar'
+          }
+        }
+      end
+      it 'returns nested camelized key hash' do
+        expect(subject).to eq expected
+      end
+    end
+
+    context 'when hash value is an Array' do
+      let(:hash) do
+        {
+          foo_bar: [{
+            bar_baz: 'foo'
+          }, {
+            baz_foo: 'bar'
+          }]
+        }
+      end
+      let(:expected) do
+        {
+          FooBar: [{
+            BarBaz: 'foo'
+          }, {
+            BazFoo: 'bar'
+          }]
+        }
+      end
+      it 'transforms each hash of the Array' do
+        expect(subject).to eq expected
       end
     end
   end
