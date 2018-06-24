@@ -1,4 +1,3 @@
-require 'rms_api_ruby/chain/http_client'
 require 'rms_api_ruby/chain'
 require 'rms_api_ruby/utility/hash_keys_camelizable'
 
