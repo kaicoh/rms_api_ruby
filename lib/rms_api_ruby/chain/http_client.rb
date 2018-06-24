@@ -2,10 +2,13 @@ require 'net/http'
 require 'cgi'
 require 'uri'
 require 'hashie/mash'
+require 'rms_api_ruby/utility/hash_keys_underscorable'
 
 module RmsApiRuby
   class Chain
     class HttpClient < RmsApiRuby::Chain
+      include RmsApiRuby::HashKeysUnderscorable
+
       SERVER_ERROR = 500
 
       def initialize(method:, url:, headers: nil, params: nil, return_method:)
@@ -58,8 +61,12 @@ module RmsApiRuby
       end
 
       def parse_to_mash
-        Hashie::Mash.new(Hash.from_xml(@response.body)).
+        Hashie::Mash.new(hash_from_response).
           send(@return_method)
+      end
+
+      def hash_from_response
+        snake_keys Hash.from_xml(@response.body)
       end
 
       def request_class(method)

@@ -86,20 +86,32 @@ RSpec.describe RmsApiRuby::Chain::HttpClient do
     end
 
     context 'when success' do
-      let!(:expected_body) { { foo: 'bar', baz: 'foobar' } }
+      let!(:response_body) do
+        {
+          fooBar: 'baz',
+          foo: {
+            BarBaz: 'foobarbaz'
+          }
+        }
+      end
       let!(:stub_req) do
         stub_request(:get, url).to_return(
           status: 200,
-          body: expected_body.to_xml(root: return_method)
+          body: response_body.to_xml(root: return_method)
         )
       end
 
       it { expect(subject.outflow.response).to be_an_instance_of Hashie::Mash }
 
-      it 'returns correct output' do
+      it 'transforms keys from camelcase to snakecase' do
         response = subject.outflow.response
-        expect(response.foo).to eq 'bar'
-        expect(response.baz).to eq 'foobar'
+        expect(response.foo_bar).to eq 'baz'
+      end
+
+      it 'returns nested Hashie::Mash object' do
+        nested_attr = subject.outflow.response.foo
+        expect(nested_attr).to be_an_instance_of Hashie::Mash
+        expect(nested_attr.bar_baz).to eq 'foobarbaz'
       end
     end
 
