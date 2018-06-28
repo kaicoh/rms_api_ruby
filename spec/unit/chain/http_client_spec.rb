@@ -40,7 +40,7 @@ RSpec.describe RmsApiRuby::Chain::HttpClient do
     context 'sets header' do
       let(:hash_params) { common_params.merge(method: :get, headers: headers) }
       let(:headers) { { foo: :bar, baz: 'foobar' } }
-      let(:stub_req) do
+      let!(:stub_req) do
         stub_request(:get, url).with(headers: headers)
       end
 
@@ -53,7 +53,7 @@ RSpec.describe RmsApiRuby::Chain::HttpClient do
     context 'sets query parameters' do
       let(:hash_params) { common_params.merge(method: :get, params: params) }
       let(:params) { { foo: :bar, baz: 'foobar' } }
-      let(:stub_req) do
+      let!(:stub_req) do
         stub_request(:get, "#{url}?foo=bar&baz=foobar")
       end
 
@@ -66,7 +66,7 @@ RSpec.describe RmsApiRuby::Chain::HttpClient do
     context 'sets body' do
       let(:hash_params) { common_params.merge(method: :post, params: params) }
       let(:params) { { foo: :bar, baz: 'foobar' } }
-      let(:stub_req) do
+      let!(:stub_req) do
         stub_request(:post, url).with(body: 'foo=bar&baz=foobar')
       end
 
