@@ -30,7 +30,7 @@ RSpec.describe RmsApiRuby::Item do
       )
     end
 
-    it 'returns an Hashie Mash instance' do
+    it 'returns a Hashie Mash instance' do
       expect(subject).to be_an_instance_of Hashie::Mash
     end
 
@@ -55,7 +55,46 @@ RSpec.describe RmsApiRuby::Item do
   end
 
   describe '::insert' do
-    it 'creates an item'
+    subject { described_class.insert(args) }
+    let(:args) { { item_url: 'myItem01' } }
+    let(:response) do
+      {
+        status: 'N00',
+        itemInsertResult: {
+          code: 'N000',
+          item: 'item001'
+        }
+      }
+    end
+    let!(:stub_req) do
+      stub_request(:post, "#{url}/insert").to_return(
+        status: 201,
+        body: response.to_xml(root: :result)
+      )
+    end
+
+    it 'returns a Hashie Mash instance' do
+      expect(subject).to be_an_instance_of Hashie::Mash
+    end
+
+    it 'returns correct output' do
+      response = subject
+      expect(response.status).to eq 'N00'
+      expect(response.item_insert_result.code).to eq 'N000'
+      expect(response.item_insert_result.item).to eq 'item001'
+    end
+
+    it 'logs the start message' do
+      expect(logger_mock).to receive(:info).
+        with("RMS ItemAPI 'INSERT' started. args: {:item_url=>\"myItem01\"}")
+      subject
+    end
+
+    it 'logs the complete message' do
+      expect(logger_mock).to receive(:info).
+        with("RMS ItemAPI 'INSERT' completed.")
+      subject
+    end
   end
 
   describe '::update' do

@@ -2,19 +2,19 @@ require 'rms_api_ruby/item/base'
 
 module RmsApiRuby
   class Item
-    class Insert < RmsApiRuby::Item::Base
+    class Get < RmsApiRuby::Item::Base
       private
 
       def http_method
-        :post
+        :get
       end
 
       def url
-        "#{base_url}insert"
+        "#{base_url}get"
       end
 
       def api_name
-        'INSERT'
+        'GET'
       end
     end
   end

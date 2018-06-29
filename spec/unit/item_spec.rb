@@ -27,6 +27,23 @@ RSpec.describe RmsApiRuby::Item do
     end
   end
 
+  describe '::insert' do
+    subject { described_class.insert(args) }
+
+    before do
+      allow(RmsApiRuby::Item::Insert).to receive(:new).
+        with(args).
+        and_return(mock_api)
+      allow(mock_api).to receive(:call).
+        and_return(ChainMock.new(key: :response, val: response))
+    end
+
+    it 'returns correct object' do
+      result = subject
+      expect(result.foo).to eq :bar
+    end
+  end
+
   describe 'error handling' do
     subject { described_class.get(args) }
 
