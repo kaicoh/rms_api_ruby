@@ -2,19 +2,19 @@ require 'rms_api_ruby/item/base'
 
 module RmsApiRuby
   class Item
-    class Get < RmsApiRuby::Item::Base
+    class Update < RmsApiRuby::Item::Base
       private
 
       def http_method
-        :get
+        :post
       end
 
       def url
-        "#{base_url}get"
+        "#{base_url}update"
       end
 
       def api_name
-        'GET'
+        'UPDATE'
       end
     end
   end

@@ -2,6 +2,7 @@ module RmsApiRuby
   class Item
     autoload :Get,    'rms_api_ruby/item/get'
     autoload :Insert, 'rms_api_ruby/item/insert'
+    autoload :Update, 'rms_api_ruby/item/update'
 
     class << self
       def get(args)
@@ -10,6 +11,10 @@ module RmsApiRuby
 
       def insert(args)
         call_api Insert.new(args)
+      end
+
+      def update(args)
+        call_api Update.new(args)
       end
 
       private
