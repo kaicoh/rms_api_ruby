@@ -61,6 +61,23 @@ RSpec.describe RmsApiRuby::Item do
     end
   end
 
+  describe '::delete' do
+    subject { described_class.delete(args) }
+
+    before do
+      allow(RmsApiRuby::Item::Delete).to receive(:new).
+        with(args).
+        and_return(mock_api)
+      allow(mock_api).to receive(:call).
+        and_return(ChainMock.new(key: :response, val: response))
+    end
+
+    it 'returns correct object' do
+      result = subject
+      expect(result.foo).to eq :bar
+    end
+  end
+
   describe 'error handling' do
     subject { described_class.get(args) }
 

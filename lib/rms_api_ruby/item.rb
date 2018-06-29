@@ -3,18 +3,21 @@ module RmsApiRuby
     autoload :Get,    'rms_api_ruby/item/get'
     autoload :Insert, 'rms_api_ruby/item/insert'
     autoload :Update, 'rms_api_ruby/item/update'
+    autoload :Delete, 'rms_api_ruby/item/delete'
+
+    API_METHODS = %w[
+      get
+      insert
+      update
+      delete
+    ].freeze
 
     class << self
-      def get(args)
-        call_api Get.new(args)
-      end
-
-      def insert(args)
-        call_api Insert.new(args)
-      end
-
-      def update(args)
-        call_api Update.new(args)
+      API_METHODS.each do |api_method|
+        define_method api_method do |args = nil|
+          api_class = "RmsApiRuby::Item::#{api_method.camelize}"
+          call_api api_class.constantize.new(args)
+        end
       end
 
       private
