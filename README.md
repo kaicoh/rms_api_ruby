@@ -4,14 +4,14 @@
 [![CircleCI](https://circleci.com/gh/Kaicoh/rms_api_ruby/tree/master.svg?style=svg)](https://circleci.com/gh/Kaicoh/rms_api_ruby/tree/master)
 
 RmsApiRuby is a ruby gem for the RMS(Rakuten Marchant Service) Web API. By default all API calls will return [Hashie::Mash](https://github.com/intridea/hashie/tree/v1.2.0) objects.  
-At this time this gem supports OrderAPI and InventoryAPI only.
+At this time this gem supports OrderAPI, InventoryAPI and ItemAPI.
 
 Support
 - OrderAPI
 - InventoryAPI
+- ItemAPI
 
 Not Support yet
-- ItemAPI
 - ProductAPI
 - CabinetAPI
 - NavigationAPI
@@ -60,92 +60,14 @@ RmsApiRuby.configure do |config|
   config.user_name             = 'user name'             # default 'rms_api_ruby'
   config.order_api_version     = 'Order API version'     # default 1.0
   config.inventory_api_version = 'Inventory API version' # default 1.0
+  config.item_api_version      = 'Item API version'      # default 1.0
 end
 ```
 
-### Example
-
-#### OrderAPI
-
-##### GetOrder
-
-```ruby
-args = {
-  is_order_number_only_flag: false,
-  order_number: ['Rakuten order number you want'],
-}
-response = RmsApiRuby::Order.get_order(args)
-# => #<Hashie::Mash>
-
-response.error_code
-# => 'N00-000'
-
-response.message
-# => '正常終了'
-
-rakuten_order = response.order_model
-# => #<Hashie::Mash>
-```
-
-##### ChangeStatus
-
-```ruby
-response = RmsApiRuby::Order.get_request_id
-# => #<Hashie::Mash>
-
-response.error_code
-# => 'N00-000'
-
-response.message
-# => '正常終了'
-
-request_id = response.request_id
-# => 'XXXXXXXXXX'
-
-args = {
-  request_id: request_id,
-  order_status_model: [
-    {
-      order_number: ['Rakuten order number you want to change status'],
-      status_name: '発送後入金待ち'
-    }
-  ]
-}
-
-response = RmsApiRuby::Order.change_status(args)
-# => #<Hashie::Mash>
-
-response.error_code
-# => 'N00-000'
-
-response.message
-# => '正常終了'
-
-```
-
-### InventoryAPI
-
-#### GetInventoryExternal
-
-```ruby
-args = {
-  inventory_search_range: 100
-}
-response = RmsApiRuby::Inventory.get_inventory_external(args)
-# => #<Hashie::Mash>
-
-response.keys
-# => ["err_code", "err_message", "get_response_external_item", "@xmlns:n1", "@xmlns:n2", "@xsi:type"]
-
-response.err_code
-# => 'N00-000'
-
-response.err_message
-# => '正常終了'
-
-response.get_response_external_item
-# => #<Hashie::Mash>
-```
+### Examples
+- [OrderAPI](docs/order_api.md)
+- [InventoryAPI](docs/inventory_api.md)
+- [ItemAPI](docs/item_api.md)
 
 ## Development
 
