@@ -65,9 +65,9 @@ RSpec.describe RmsApiRuby::Chain::HttpClient do
 
     context 'sets body' do
       let(:hash_params) { common_params.merge(method: :post, params: params) }
-      let(:params) { { foo: :bar, baz: 'foobar' } }
+      let(:params) { { foo: :bar, baz: 'foobar' }.to_json }
       let!(:stub_req) do
-        stub_request(:post, url).with(body: 'foo=bar&baz=foobar')
+        stub_request(:post, url).with(body: params)
       end
 
       it 'requests with correct body' do

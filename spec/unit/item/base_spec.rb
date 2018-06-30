@@ -35,7 +35,7 @@ RSpec.describe RmsApiRuby::Item::Base do
         with(
           method: :http_method,
           url: 'https://example.com',
-          params: { fooBar: 'baz' },
+          params: { fooBar: 'baz' }.to_xml(root: :request),
           headers: { Authorization: 'test auth key' },
           return_method: :result
         )

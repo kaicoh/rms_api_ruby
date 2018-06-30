@@ -25,7 +25,7 @@ module RmsApiRuby
       end
 
       def set_body(params)
-        @request.set_form_data params
+        @request.body = params
       end
 
       def execute_request

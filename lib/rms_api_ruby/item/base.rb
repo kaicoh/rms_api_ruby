@@ -12,7 +12,7 @@ module RmsApiRuby
         @client = client_class.new(
           method: http_method,
           url: url,
-          params: camelize_keys(args, :lower),
+          params: form_params(args),
           headers: http_headers,
           return_method: :result
         )
@@ -60,6 +60,14 @@ module RmsApiRuby
 
       def complete_message
         "RMS ItemAPI '#{api_name}' completed."
+      end
+
+      def form_params(args)
+        if http_method == :get
+          camelize_keys(args, :lower)
+        else
+          camelize_keys(args, :lower).to_xml(root: :request, skip_types: true)
+        end
       end
     end
   end
