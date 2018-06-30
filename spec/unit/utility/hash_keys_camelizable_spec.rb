@@ -58,20 +58,14 @@ RSpec.describe RmsApiRuby::HashKeysCamelizable do
     context 'when hash value is an Array' do
       let(:hash) do
         {
-          foo_bar: [{
-            bar_baz: 'foo'
-          }, {
-            baz_foo: 'bar'
-          }]
+          foo_bar: [{ bar_baz: 'foo' }, { baz_foo: 'bar' }],
+          foo: %w[bar baz]
         }
       end
       let(:expected) do
         {
-          FooBar: [{
-            BarBaz: 'foo'
-          }, {
-            BazFoo: 'bar'
-          }]
+          FooBar: [{ BarBaz: 'foo' }, { BazFoo: 'bar' }],
+          Foo: %w[bar baz]
         }
       end
       it 'transforms each hash of the Array' do
