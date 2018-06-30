@@ -4,12 +4,14 @@ module RmsApiRuby
     autoload :Insert, 'rms_api_ruby/item/insert'
     autoload :Update, 'rms_api_ruby/item/update'
     autoload :Delete, 'rms_api_ruby/item/delete'
+    autoload :Search, 'rms_api_ruby/item/search'
 
     API_METHODS = %w[
       get
       insert
       update
       delete
+      search
     ].freeze
 
     class << self

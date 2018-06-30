@@ -184,6 +184,45 @@ RSpec.describe RmsApiRuby::Item do
   end
 
   describe '::search' do
-    it 'returns items satisfiying the conditions'
+    subject { described_class.search(args) }
+    let(:args) { { item_url: 'myItem01' } }
+    let(:response) do
+      {
+        status: 'N00',
+        itemSearchResult: {
+          code: 'N000',
+          item: 'item001'
+        }
+      }
+    end
+    let!(:stub_req) do
+      stub_request(:get, "#{url}/search?itemUrl=myItem01").to_return(
+        status: 200,
+        body: response.to_xml(root: :result)
+      )
+    end
+
+    it 'returns a Hashie Mash instance' do
+      expect(subject).to be_an_instance_of Hashie::Mash
+    end
+
+    it 'returns correct output' do
+      response = subject
+      expect(response.status).to eq 'N00'
+      expect(response.item_search_result.code).to eq 'N000'
+      expect(response.item_search_result.item).to eq 'item001'
+    end
+
+    it 'logs the start message' do
+      expect(logger_mock).to receive(:info).
+        with("RMS ItemAPI 'SEARCH' started. args: {:item_url=>\"myItem01\"}")
+      subject
+    end
+
+    it 'logs the complete message' do
+      expect(logger_mock).to receive(:info).
+        with("RMS ItemAPI 'SEARCH' completed.")
+      subject
+    end
   end
 end
