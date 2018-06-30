@@ -1,3 +1,6 @@
+## 0.3.0 (Jul 1, 2018)
+* Add Item API
+
 ## 0.2.2 (Jun 23, 2018)
 * Add circle ci
 
