@@ -3,6 +3,7 @@ require 'active_support/core_ext'
 module RmsApiRuby
   module HashKeysUnderscorable
     def snake_keys(hash)
+      return nil if hash.nil?
       hash.each_with_object({}) do |(key, val), acc|
         if val.is_a?(Array)
           val = val.map { |v| to_snake_keys(v) }

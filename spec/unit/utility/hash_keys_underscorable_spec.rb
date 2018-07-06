@@ -63,5 +63,10 @@ RSpec.describe RmsApiRuby::HashKeysUnderscorable do
         expect(subject).to eq expected
       end
     end
+
+    context 'nil' do
+      let(:hash) { nil }
+      it { expect(subject).to be_nil }
+    end
   end
 end
