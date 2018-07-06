@@ -1,38 +1,9 @@
-require 'rms_api_ruby/chain'
-require 'rms_api_ruby/utility/hash_keys_camelizable'
+require 'rms_api_ruby/rest_api/base'
 
 module RmsApiRuby
   class Item
-    class Base
-      include Waterfall
-      include RmsApiRuby::HashKeysCamelizable
-
-      def initialize(args, client_class = RmsApiRuby::Chain::HttpClient)
-        @args   = args
-        @client = client_class.new(
-          method: http_method,
-          url: url,
-          params: form_params(args),
-          headers: http_headers,
-          return_method: :result
-        )
-      end
-
-      def call
-        chain { log :info, start_message }
-        chain(response: :response) { @client.call }
-        chain { log :info, complete_message }
-      end
-
+    class Base < RmsApiRuby::RestApi::Base
       private
-
-      def http_method
-        raise NotImplementedError, "You must implement #{self.class}##{__method__}"
-      end
-
-      def url
-        raise NotImplementedError, "You must implement #{self.class}##{__method__}"
-      end
 
       def api_name
         raise NotImplementedError, "You must implement #{self.class}##{__method__}"
@@ -46,28 +17,12 @@ module RmsApiRuby
         RmsApiRuby.configuration.item_api_version
       end
 
-      def http_headers
-        { Authorization: RmsApiRuby::Authentication.key }
-      end
-
-      def log(level, message)
-        RmsApiRuby::Chain::Logger.new(level, message)
-      end
-
       def start_message
         "RMS ItemAPI '#{api_name}' started. args: #{@args.inspect}"
       end
 
       def complete_message
         "RMS ItemAPI '#{api_name}' completed."
-      end
-
-      def form_params(args)
-        if http_method == :get
-          camelize_keys(args, :lower)
-        else
-          camelize_keys(args, :lower).to_xml(root: :request, skip_types: true)
-        end
       end
     end
   end
