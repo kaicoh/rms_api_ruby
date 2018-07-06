@@ -17,6 +17,8 @@ RSpec.shared_context "shared config", shared_context: :metadata do
       and_return('1.0')
     allow(RmsApiRuby).to receive_message_chain('configuration.item_api_version').
       and_return('1.0')
+    allow(RmsApiRuby).to receive_message_chain('configuration.product_api_version').
+      and_return('2.0')
     allow(RmsApiRuby).to receive_message_chain('configuration.user_name').
       and_return('test user')
   end
