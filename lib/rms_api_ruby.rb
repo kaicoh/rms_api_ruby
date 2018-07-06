@@ -18,6 +18,7 @@ module RmsApiRuby
   autoload :Item,           'rms_api_ruby/item'
   autoload :Items,          'rms_api_ruby/items'
   autoload :Product,        'rms_api_ruby/product'
+  autoload :Navigation,     'rms_api_ruby/navigation'
 
   def self.root
     File.dirname __dir__

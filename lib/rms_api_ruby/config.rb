@@ -85,10 +85,11 @@ module RmsApiRuby
     option :logger,         default: ::Logger.new(STDOUT)
     option :log_level,      default: ::Logger::DEBUG
 
-    option :order_api_version,     default: '1.0'
-    option :inventory_api_version, default: '1.0'
-    option :item_api_version,      default: '1.0'
-    option :product_api_version,   default: '2.0'
+    option :order_api_version,      default: '1.0'
+    option :inventory_api_version,  default: '1.0'
+    option :item_api_version,       default: '1.0'
+    option :product_api_version,    default: '2.0'
+    option :navigation_api_version, default: '1.0'
 
     def options
       self.class.options

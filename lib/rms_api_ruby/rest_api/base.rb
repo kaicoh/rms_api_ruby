@@ -51,10 +51,13 @@ module RmsApiRuby
       end
 
       def form_params(args)
+        camelized_params = camelize_keys(args, :lower)
         if http_method == :get
-          camelize_keys(args, :lower)
+          camelized_params
+        elsif camelized_params.nil?
+          nil
         else
-          camelize_keys(args, :lower).to_xml(root: :request, skip_types: true)
+          camelized_params.to_xml(root: :request, skip_types: true)
         end
       end
     end
