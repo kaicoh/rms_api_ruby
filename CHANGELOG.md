@@ -1,3 +1,6 @@
+## 0.4.0 (Jul 7, 2018)
+* Add Product API and Navigation API
+
 ## 0.3.0 (Jul 1, 2018)
 * Add Item API
 

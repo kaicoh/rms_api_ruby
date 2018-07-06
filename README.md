@@ -4,17 +4,17 @@
 [![CircleCI](https://circleci.com/gh/Kaicoh/rms_api_ruby/tree/master.svg?style=svg)](https://circleci.com/gh/Kaicoh/rms_api_ruby/tree/master)
 
 RmsApiRuby is a ruby gem for the RMS(Rakuten Marchant Service) Web API. By default all API calls will return [Hashie::Mash](https://github.com/intridea/hashie/tree/v1.2.0) objects.  
-At this time this gem supports OrderAPI, InventoryAPI and ItemAPI.
+At this time this gem supports OrderAPI, InventoryAPI, ItemAPI, ProductAPI and NavigationAPI.
 
 Support
 - OrderAPI
 - InventoryAPI
 - ItemAPI
+- ProductAPI
+- NavigationAPI
 
 Not Support yet
-- ProductAPI
 - CabinetAPI
-- NavigationAPI
 - CategoryAPI
 - CouponAPI
 - ShopManagimentAPI
@@ -54,13 +54,15 @@ Or can set any of the options via this way
 
 ```ruby
 RmsApiRuby.configure do |config|
-  config.service_secret        = 'Your RMS service secret'
-  config.license_key           = 'Your RMS license key'
-  config.shop_url              = 'Your RMS shop url'
-  config.user_name             = 'user name'             # default 'rms_api_ruby'
-  config.order_api_version     = 'Order API version'     # default 1.0
-  config.inventory_api_version = 'Inventory API version' # default 1.0
-  config.item_api_version      = 'Item API version'      # default 1.0
+  config.service_secret         = 'Your RMS service secret'
+  config.license_key            = 'Your RMS license key'
+  config.shop_url               = 'Your RMS shop url'
+  config.user_name              = 'user name'              # default 'rms_api_ruby'
+  config.order_api_version      = 'Order API version'      # default 1.0
+  config.inventory_api_version  = 'Inventory API version'  # default 1.0
+  config.item_api_version       = 'Item API version'       # default 1.0
+  config.product_api_version    = 'Product API version'    # default 2.0
+  config.navigation_api_version = 'Navigation API version' # default 1.0
 end
 ```
 
@@ -68,12 +70,8 @@ end
 - [OrderAPI](docs/order_api.md)
 - [InventoryAPI](docs/inventory_api.md)
 - [ItemAPI](docs/item_api.md)
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+- [ProductAPI](docs/product_api.md)
+- [NavigationAPI](docs/navigation_api.md)
 
 ## Contributing
 
