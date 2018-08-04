@@ -1,3 +1,5 @@
+require 'rms_api_ruby/middleware'
+
 module RmsApiRuby
   class RakutenPayOrder
     BASE_URL = 'https://api.rms.rakuten.co.jp'.freeze
@@ -33,10 +35,13 @@ module RmsApiRuby
 
       def conn
         Faraday.new(url: BASE_URL) do |faraday|
+          faraday.request  :camelcase
           faraday.request  :url_encoded
           faraday.request  :json
 
           faraday.response :logger
+          faraday.response :parse_mash
+          faraday.response :snakecase
           faraday.response :xml,  content_type: /\bxml$/
           faraday.response :json, content_type: /\bjson$/
 
