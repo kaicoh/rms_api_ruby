@@ -38,6 +38,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'faraday'
   spec.add_dependency 'faraday_middleware'
   spec.add_dependency 'hashie'
+  spec.add_dependency 'multi_xml'
   spec.add_dependency 'savon', '~> 2.12.0'
   spec.add_dependency 'waterfall', '~> 1.2.0'
 

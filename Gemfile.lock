@@ -6,6 +6,7 @@ PATH
       faraday
       faraday_middleware
       hashie
+      multi_xml
       savon (~> 2.12.0)
       waterfall (~> 1.2.0)
 
@@ -47,6 +48,7 @@ GEM
     method_source (0.9.0)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
+    multi_xml (0.6.0)
     multipart-post (2.0.0)
     nokogiri (1.8.4)
       mini_portile2 (~> 2.3.0)
