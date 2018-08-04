@@ -90,6 +90,7 @@ module RmsApiRuby
     option :item_api_version,       default: '1.0'
     option :product_api_version,    default: '2.0'
     option :navigation_api_version, default: '1.0'
+    option :rakuten_pay_order_api_version, default: '2.0'
 
     def options
       self.class.options
