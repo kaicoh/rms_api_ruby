@@ -12,6 +12,6 @@ response = RmsApiRuby::RakutenPayOrder.get_order(args)
 response.keys
 # => ["message_model_list", "order_model_list"]
 
-rakuten_order = response.order_model
+response.order_model_list
 # => #<Hashie::Array>
 ```
