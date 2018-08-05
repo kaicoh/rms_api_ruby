@@ -3,14 +3,17 @@ require 'active_support/core_ext'
 module RmsApiRuby
   module HashKeysCamelizable
     def camelize_keys(hash, first_letter = :upper)
-      return nil if hash.nil?
-      hash.each_with_object({}) do |(key, val), acc|
-        if val.is_a?(Array)
-          val = val.map { |v| to_camel_keys(v, first_letter) }
-        elsif val.is_a?(Hash)
-          val = camelize_keys(val, first_letter)
+      if hash.respond_to? :each_with_object
+        hash.each_with_object({}) do |(key, val), acc|
+          if val.is_a?(Array)
+            val = val.map { |v| to_camel_keys(v, first_letter) }
+          elsif val.is_a?(Hash)
+            val = camelize_keys(val, first_letter)
+          end
+          acc[camel_key(key, first_letter)] = val
         end
-        acc[camel_key(key, first_letter)] = val
+      else
+        hash
       end
     end
 

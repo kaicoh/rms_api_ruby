@@ -26,7 +26,7 @@ RSpec.describe RmsApiRuby::HashKeysUnderscorable do
       end
     end
 
-    context 'when nexted hash' do
+    context 'when nested hash' do
       let(:hash) do
         {
           FooBar: {
@@ -67,6 +67,13 @@ RSpec.describe RmsApiRuby::HashKeysUnderscorable do
     context 'nil' do
       let(:hash) { nil }
       it { expect(subject).to be_nil }
+    end
+
+    context 'given object unable to respond :each_with_object' do
+      let(:hash) { 'foobar' }
+      it 'returns parameter untouched' do
+        expect(subject).to eq hash
+      end
     end
   end
 end

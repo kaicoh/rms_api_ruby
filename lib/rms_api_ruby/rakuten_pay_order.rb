@@ -22,18 +22,18 @@ module RmsApiRuby
     class << self
       API_METHODS.each do |api_method|
         define_method api_method do |args = nil|
-          conn.post do |req|
+          connection.post do |req|
             req.url endpoint(api_method)
             req.headers['Content-Type'] = 'application/json; charset=utf-8'
             req.headers['Authorization'] = RmsApiRuby::Authentication.key
             req.body = args
-          end
+          end.try(:body)
         end
       end
 
       private
 
-      def conn
+      def connection
         Faraday.new(url: BASE_URL) do |faraday|
           faraday.request  :camelcase
           faraday.request  :url_encoded
