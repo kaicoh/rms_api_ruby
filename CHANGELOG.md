@@ -1,3 +1,6 @@
+## 0.5.0 (Aug 5, 2018)
+* Add RakutenPayOrder API
+
 ## 0.4.0 (Jul 7, 2018)
 * Add Product API and Navigation API
 

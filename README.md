@@ -4,7 +4,7 @@
 [![CircleCI](https://circleci.com/gh/Kaicoh/rms_api_ruby/tree/master.svg?style=svg)](https://circleci.com/gh/Kaicoh/rms_api_ruby/tree/master)
 
 RmsApiRuby is a ruby gem for the RMS(Rakuten Marchant Service) Web API. By default all API calls will return [Hashie::Mash](https://github.com/intridea/hashie/tree/v1.2.0) objects.  
-At this time this gem supports OrderAPI, InventoryAPI, ItemAPI, ProductAPI and NavigationAPI.
+At this time the APIs this gem supports are as follows.
 
 Support
 - OrderAPI
@@ -12,6 +12,7 @@ Support
 - ItemAPI
 - ProductAPI
 - NavigationAPI
+- RakutenPayOrderAPI
 
 Not Support yet
 - CabinetAPI
@@ -19,7 +20,6 @@ Not Support yet
 - CouponAPI
 - ShopManagimentAPI
 - System Event Notification Service
-- RakutenPayOrderAPI
 - PaymentAPI
 
 ## Installation
@@ -63,6 +63,7 @@ RmsApiRuby.configure do |config|
   config.item_api_version       = 'Item API version'       # default 1.0
   config.product_api_version    = 'Product API version'    # default 2.0
   config.navigation_api_version = 'Navigation API version' # default 1.0
+  config.rakuten_pay_order_api_version = 'RakutenPayOrder API version' # default 2.0
 end
 ```
 
@@ -72,6 +73,7 @@ end
 - [ItemAPI](docs/item_api.md)
 - [ProductAPI](docs/product_api.md)
 - [NavigationAPI](docs/navigation_api.md)
+- [RakutenPayOrderAPI](docs/rakuten_pay_order_api.md)
 
 ## Contributing
 
