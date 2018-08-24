@@ -52,7 +52,7 @@ module RmsApiRuby
 
       def endpoint(api_method)
         "/es/#{RmsApiRuby.configuration.rakuten_pay_order_api_version}" \
-        "/order/#{api_method.to_s.camelize(:lower)}/"
+        "/order/#{api_method.camelize(:lower)}/"
       end
     end
   end
