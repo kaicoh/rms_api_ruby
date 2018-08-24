@@ -40,7 +40,7 @@ module RmsApiRuby
           faraday.request  :json
 
           faraday.response :logger
-          faraday.response :parse_mash
+          faraday.response :mashify
           faraday.response :snakecase
           faraday.response :xml,  content_type: /\bxml$/
           faraday.response :json, content_type: /\bjson$/
