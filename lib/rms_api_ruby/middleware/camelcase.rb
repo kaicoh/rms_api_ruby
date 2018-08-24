@@ -1,12 +1,19 @@
-require 'rms_api_ruby/utility/hash_keys_camelizable'
+require 'active_support'
+require 'active_support/core_ext'
 
 module RmsApiRuby
   class Middleware
     class Camelcase < Faraday::Middleware
-      include RmsApiRuby::HashKeysCamelizable
-
       def call(env)
-        env[:body] = camelize_keys(env[:body], :lower)
+        if env[:body].respond_to? :deep_transform_keys!
+          env[:body].deep_transform_keys! do |key|
+            if key.to_s.first =~ /[A-Z]/
+              key.to_s.camelize(:upper).to_sym
+            else
+              key.to_s.camelize(:lower).to_sym
+            end
+          end
+        end
         @app.call env
       end
     end
