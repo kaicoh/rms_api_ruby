@@ -1,3 +1,6 @@
+## 0.5.1 (Aug 25, 2018)
+* Bug fix of RakutenPayOrder API
+
 ## 0.5.0 (Aug 5, 2018)
 * Add RakutenPayOrder API
 
