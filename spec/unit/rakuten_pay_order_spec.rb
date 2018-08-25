@@ -18,7 +18,7 @@ RSpec.describe RmsApiRuby::RakutenPayOrder do
   end
 
   describe '::endpoint' do
-    subject { described_class.send :endpoint, :foo_bar }
+    subject { described_class.send :endpoint, 'foo_bar' }
     it { expect(subject).to eq "/es/2.0/order/fooBar/" }
   end
 end
