@@ -1,3 +1,6 @@
+## 0.5.2 (Dec 4, 2018)
+* Remove vulnerability in Rack 2.0.5
+
 ## 0.5.1 (Aug 25, 2018)
 * Bug fix of RakutenPayOrder API
 
