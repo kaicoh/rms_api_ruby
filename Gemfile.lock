@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rms_api_ruby (0.5.1)
+    rms_api_ruby (0.5.2)
       activesupport
       faraday
       faraday_middleware
