@@ -17,6 +17,10 @@ module RmsApiRuby
       cancel_order
       get_sub_status_list
       update_order_sub_status
+      update_order_shipping_async
+      get_result_update_order_shipping_async
+      update_order_sender_after_shipping
+      cancel_order_after_shipping
     ].freeze
 
     class << self
